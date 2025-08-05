@@ -1,0 +1,46 @@
+### model
+model_name_or_path: saves/qwen2.5/ti-zh/qwen-ti/
+adapter_name_or_path: saves/qwen2.5/ti-zh/sft/checkpoint-3958/
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_target: all
+
+lora_alpha: 32
+lora_dropout: 0.1
+lora_rank: 16
+
+
+dataset: sft_task_ti2zh1,sft_task_zh2ti1,sft_task_ti2zh2,sft_task_zh2ti2
+template: qwen
+cutoff_len: 2048
+max_samples: 20000
+overwrite_cache: true
+#resume_from_checkpoint: true
+preprocessing_num_workers: 16
+
+output_dir: saves/qwen2.5/ti-zh/sft_task/
+logging_steps: 200
+save_steps: 200
+save_total_limit: 2
+plot_loss: true
+overwrite_output_dir: true
+
+
+
+per_device_train_batch_size: 8
+gradient_accumulation_steps: 8
+learning_rate: 2.0e-4
+lr_scheduler_type: cosine
+num_train_epochs: 2.0
+warmup_ratio: 0.1
+bf16: false
+fp16: true
+ddp_timeout: 180000000
+
+
+val_size: 0.05
+per_device_eval_batch_size: 8
+eval_strategy: steps
+eval_steps: 200

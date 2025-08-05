@@ -1,0 +1,45 @@
+### model
+model_name_or_path: saves/qwen2.5/ko-en/qwen-ko/
+adapter_name_or_path: saves/qwen2.5/ko-en/pt/
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_target: all
+
+lora_alpha: 32
+lora_dropout: 0.1
+lora_rank: 16
+
+
+dataset: sft_koen_data1, sft_koen_data2, sft_koen_data3, sft_koen_data4
+template: qwen
+cutoff_len: 2048
+max_samples: 200000
+overwrite_cache: false
+preprocessing_num_workers: 16
+
+output_dir: saves/qwen2.5/ko-en/sft/
+logging_steps: 200
+save_steps: 200
+save_total_limit: 2
+plot_loss: true
+overwrite_output_dir: true
+#resume_from_checkpoint: true
+
+
+per_device_train_batch_size: 8
+gradient_accumulation_steps: 8
+learning_rate: 2.0e-4
+lr_scheduler_type: cosine
+num_train_epochs: 2.0
+warmup_ratio: 0.1
+bf16: true
+ddp_timeout: 180000000
+
+
+val_size: 0.05
+per_device_eval_batch_size: 8
+eval_strategy: steps
+eval_steps: 200
